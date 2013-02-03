@@ -13,7 +13,7 @@ describe('Life game', function() {
 		it('gwiazdka', function() {
 			expect("*").toEqual(board.cell(2,3));
 		});
-		it('gwiazdka', function() {
+		it('testing setCell with 9', function() {
 			board.setCell(2,3, "9");
 			expect("9").toEqual(board.cell(2,3));
 		});
