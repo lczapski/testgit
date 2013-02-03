@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://underscorejs.org/underscore-min.js"></script>
+    <script src="game-of-life.js"></script>
+</head>
+<body>
+    <div id="viz"></div>
+    <script type="text/javascript">
+    
+	var arr = ["........................",
+               "..***...................",
+               "..***...................",
+               "..***.....*.*...........",
+               ".........*..*...........",
+               ".......***..............",
+               "........*...............",
+               ".......*................",
+               "........*...............",
+               ".......*................",
+               "......*.................",
+               "......*.................",
+               "........................",
+               "........................",
+               "........................"];
+	
+	var currentBoard = new Board(arr);
+	var currentArray = currentBoard.currentArray;
+
+    var sampleSVG = d3.select("#viz")
+	    .append("svg")
+	    .attr("width", 500)
+	    .attr("height", 400);  
+   
+    var cellArray = new Array;
+    
+    _.each(_.range(currentArray.length), function(row) {
+    	cellArray[row] = new Array;
+    	_.each(_.range(currentArray[row].length), function(column) {
+    		var currentCell = sampleSVG.append("circle")
+	    	    .style("stroke", "gray")
+	    	    .style("fill","aliceblue")
+	    	    .attr("r", 10)
+	    	    .attr("cx", 20*(column+1))
+	    	    .attr("cy", 20*(row+1));
+    		
+    		currentCell.on("mouseover", function(){
+    			currentBoard.setCell(row,column,"*");
+    			currentCell.style("fill","green");
+    		});
+    		
+    		cellArray[row][column] = currentCell;
+    	});
+    });
+    
+	function next(){
+        _.each(_.range(currentArray.length), function(row) {
+        	_.each(_.range(currentArray[row].length), function(column) {
+        		currentChar = currentArray[row].charAt(column);
+        		cellArray[row][column].style("fill", (currentChar == "*")?"gray":"aliceblue");
+        	});
+        });
+        
+        currentBoard = currentBoard.next();
+    	currentArray = currentBoard.currentArray;
+	}
+	
+	setInterval(function(){next()},100);
+
+    </script>
+</body>
+</html>
