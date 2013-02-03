@@ -49,7 +49,6 @@ Board.countLiveNeighbours = function(board, row, column) {
 
 Board.newChar = function(char, count){
 	newchar = "";
-	// tu preksztalcenia
 	if (char == "*") {
 		if (count < 2) {
 			return ".";
@@ -63,5 +62,4 @@ Board.newChar = function(char, count){
 		return "*";
 	} 
 	return ".";
-	
 }
